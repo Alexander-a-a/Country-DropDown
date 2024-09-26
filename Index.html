@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countries</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <style>
+        h1 {
+            text-align: center;
+            margin-bottom: 30px; /* Space between h1 and buttons */
+        }
+        
+        h3 {
+            text-align: center;
+            margin-top: 60px;
+            color:rgb(254, 155, 17);
+        }
+
+        body {
+            background-color: rgb(90, 245, 245);
+            margin: 0;
+            padding: 0;
+        }
+
+        .btn-group-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: calc(10vh - 100px); /* Adjust this value to move the buttons up or down */
+            margin-top: 20px; 
+        }
+
+        .btn-group {
+            margin: 0 10px; 
+        }
+
+        .btn-group-random {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: calc(20vh - 100px) ;
+        }
+
+        .country-info {
+            text-align: center;
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fff;
+            max-width: 600px;
+            margin: 20px auto;
+            display: none; /* Hide by default */
+        }
+
+        .custom-image {
+            text-align: center;
+            margin-top: 20px;
+            padding: 20px;
+            max-width: 600px;
+            margin: 20px auto;
+            display: none; /* Hide by default */
+        }
+    </style>
+</head>
+<body>
+    
+    <h1>Countries</h1>
+
+    <h3>Choose an option</h3>
+
+    <div class="btn-group-container">
+        <!-- Toggle Button -->
+        <div class="btn-group-toggle-Danger" data-toggle="buttons">
+            <label class="btn btn-secondary active">
+              <input type="checkbox" id="asia" checked autocomplete="off"> Asia
+            </label>
+          </div>
+          <div class="btn-group-toggle-danger" data-toggle="buttons">
+            <label class="btn btn-secondary active">
+              <input type="checkbox" id="africa" checked autocomplete="off"> Africa
+            </label>
+          </div>
+          <div class="btn-group-toggle-Danger" data-toggle="buttons">
+            <label class="btn btn-secondary active">
+              <input type="checkbox" id="northAmerica" checked autocomplete="off"> North America
+            </label>
+          </div>
+          <div class="btn-group-toggle-Danger" data-toggle="buttons">
+            <label class="btn btn-secondary active">
+              <input type="checkbox" id="southAmerica" checked autocomplete="off"> South America
+            </label>
+          </div>
+          <div class="btn-group-toggle-Danger" data-toggle="buttons">
+            <label class="btn btn-secondary active">
+              <input type="checkbox" id="antarctica" checked autocomplete="off"> Antarctica
+            </label>
+          </div>
+          <div class="btn-group-toggle-Danger" data-toggle="buttons">
+            <label class="btn btn-secondary active">
+              <input type="checkbox" id="europe" checked autocomplete="off"> Europe
+            </label>
+          </div>
+          <div class="btn-group-toggle-Danger" data-toggle="buttons">
+            <label class="btn btn-secondary active">
+              <input type="checkbox" id="australia" checked autocomplete="off"> Australia
+            </label>
+          </div>
+        </div>
+    </div>
+
+    <div class="btn-group-random">
+        <button id="generateButton" type="button" class="btn btn-warning">Generate Country</button>
+    </div>
+
+    <div id="countryInfo" class="country-info">
+        <!-- Country information will be displayed here -->
+    </div>
+
+    <div id="customImage" class="custom-image">
+        <!-- Custom image for Antarctica -->
+        <img src="Media/67655.avif" alt="Penguin" style="width: 100%; max-width: 600px;">
+    </div>
+
+    <script>
+        document.getElementById('generateButton').addEventListener('click', async () => {
+            // Get checkbox states
+            const antarcticaChecked = document.getElementById('antarctica').checked;
+            const asiaChecked = document.getElementById('asia').checked;
+            const africaChecked = document.getElementById('africa').checked;
+            const northAmericaChecked = document.getElementById('northAmerica').checked;
+            const southAmericaChecked = document.getElementById('southAmerica').checked;
+            const europeChecked = document.getElementById('europe').checked;
+            const australiaChecked = document.getElementById('australia').checked;
+
+            // Check if only Antarctica is selected
+            const allUnchecked = !asiaChecked &&
+                                !africaChecked &&
+                                !northAmericaChecked &&
+                                !southAmericaChecked &&
+                                !europeChecked &&
+                                !australiaChecked;
+
+            if (antarcticaChecked && allUnchecked) {
+                // Hide country info and show custom image
+                document.getElementById('countryInfo').style.display = 'none';
+                document.getElementById('customImage').style.display = 'block';
+            } else {
+                // Fetch and display country info
+                document.getElementById('customImage').style.display = 'none';
+                document.getElementById('countryInfo').style.display = 'block';
+
+                try {
+                    const response = await fetch('https://restcountries.com/v3.1/all');
+                    const countries = await response.json();
+
+                    // Filter countries based on selected continents
+                    const filteredCountries = countries.filter(country => {
+                        if (asiaChecked && country.region === 'Asia') return true;
+                        if (africaChecked && country.region === 'Africa') return true;
+                        if (northAmericaChecked && country.region === 'Americas' && country.subregion === 'Northern America') return true;
+                        if (southAmericaChecked && country.region === 'Americas' && country.subregion === 'South America') return true;
+                        if (europeChecked && country.region === 'Europe') return true;
+                        if (australiaChecked && country.region === 'Oceania') return true;
+                        if (antarcticaChecked && country.region === 'Antarctic') return true;
+                        return false;
+                    });
+
+                    if (filteredCountries.length === 0) {
+                        document.getElementById('countryInfo').innerHTML = '<p>No countries match the selected continents.</p>';
+                        return;
+                    }
+
+                    const randomIndex = Math.floor(Math.random() * filteredCountries.length);
+                    const country = filteredCountries[randomIndex];
+
+                    // Extract country details
+                    const name = country.name.common;
+                    const capital = country.capital ? country.capital[0] : 'N/A';
+                    const region = country.region;
+                    const subregion = country.subregion;
+                    const population = country.population;
+                    const languages = Object.values(country.languages).join(', ');
+                    const flag = country.flags.png;
+
+                    // Display country details
+                    document.getElementById('countryInfo').innerHTML = `
+                        <h4>${name}</h4>
+                        <img src="${flag}" alt="Flag of ${name}" style="width: 150px;">
+                        <p><strong>Capital:</strong> ${capital}</p>
+                        <p><strong>Region:</strong> ${region}</p>
+                        <p><strong>Subregion:</strong> ${subregion}</p>
+                        <p><strong>Population:</strong> ${population.toLocaleString()}</p>
+                        <p><strong>Languages:</strong> ${languages}</p>
+                    `;
+                } catch (error) {
+                    console.error('Error fetching country data:', error);
+                    document.getElementById('countryInfo').innerHTML = '<p>Failed to load country information.</p>';
+                }
+            }
+        });
+    </script>
+</body>
+</html>
